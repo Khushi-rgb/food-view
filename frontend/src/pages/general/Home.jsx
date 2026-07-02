@@ -5,6 +5,7 @@ import ReelFeed from '../../components/ReelFeed'
 
 const Home = () => {
     const [ videos, setVideos ] = useState([])
+    const [search, setSearch] = useState("");
     // Autoplay behavior is handled inside ReelFeed
 
     useEffect(() => {
@@ -44,14 +45,37 @@ const Home = () => {
         }
     }
 
+  const filteredVideos = videos.filter((video) =>
+    video.name.toLowerCase().includes(search.toLowerCase()) ||
+    (video.description || "").toLowerCase().includes(search.toLowerCase())
+);
+
     return (
+    <>
+        <div style={{ padding: "10px" }}>
+           <input
+    type="text"
+    placeholder="🔍 Search food..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    style={{
+        width: "100%",
+        padding: "12px",
+        borderRadius: "8px",
+        border: "1px solid #ccc",
+        fontSize: "16px"
+    }}
+/>
+        </div>
+
         <ReelFeed
-            items={videos}
+            items={filteredVideos}
             onLike={likeVideo}
             onSave={saveVideo}
             emptyMessage="No videos available."
         />
-    )
+    </>
+)
 }
 
 export default Home
