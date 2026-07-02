@@ -1,16 +1,13 @@
-import React, { useEffect, useRef ,useState} from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import CommentModal from "./CommentModal";
+
 // Reusable feed for vertical reels
 // Props:
 // - items: Array of video items { _id, video, description, likeCount, savesCount, commentsCount, comments, foodPartner }
 // - onLike: (item) => void | Promise<void>
 // - onSave: (item) => void | Promise<void>
 // - emptyMessage: string
-
 const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' }) => {
-  const [openComment, setOpenComment] = useState(false);
-const [selectedFood, setSelectedFood] = useState(null);
   const videoRefs = useRef(new Map())
 
   useEffect(() => {
@@ -38,16 +35,8 @@ const [selectedFood, setSelectedFood] = useState(null);
     videoRefs.current.set(id, el)
   }
 
-  console.log(openComment);
-  
   return (
-    
     <div className="reels-page">
-      <CommentModal
-    open={openComment}
-     food={selectedFood}
-    onClose={() => setOpenComment(false)}
-/>
       <div className="reels-feed" role="list">
         {items.length === 0 && (
           <div className="empty-state">
@@ -97,16 +86,7 @@ const [selectedFood, setSelectedFood] = useState(null);
                 </div>
 
                 <div className="reel-action-group">
-                 <button
-className="reel-action"
-onClick={() => {
-    alert("Comment button clicked");
-
-    setSelectedFood(item);
-    setOpenComment(true);
-}}
-aria-label="Comments"
->
+                  <button className="reel-action" aria-label="Comments">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
                     </svg>
